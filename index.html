@@ -171,6 +171,13 @@ select.field-input option{background:var(--black3);color:var(--text);}
 .copy-row{display:flex;justify-content:flex-end;margin-top:10px;}
 .copy-vo{padding:7px 14px;border-radius:6px;background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-dim);font-size:12px;cursor:pointer;font-family:sans-serif;font-weight:600;}
 .copy-vo:hover{background:var(--gold);color:var(--black);}
+
+/* TOPIC CHIPS */
+.chip{display:inline-block;padding:5px 12px;border-radius:20px;font-size:11px;font-family:sans-serif;background:var(--black3);color:var(--text-muted);border:1px solid var(--border-gold);cursor:pointer;transition:all 0.15s;}
+.chip:hover{background:var(--gold-bg);color:var(--gold);border-color:var(--gold-dim);}
+.chip.active{background:var(--gold-bg);color:var(--gold);border-color:var(--gold);}
+
+.divider-line{height:1px;background:var(--border-gold);}
 </style>
 </head>
 <body>
@@ -201,6 +208,10 @@ select.field-input option{background:var(--black3);color:var(--text);}
       </button>
       <button class="nitem" onclick="goPage('image',this)">
         <i class="ti ti-photo"></i> Image Prompt
+      </button>
+      <button class="nitem" onclick="goPage('tiktok',this)">
+        <i class="ti ti-brand-tiktok"></i> TikTok Finder
+        <span class="nbadge" id="tiktok-badge">New</span>
       </button>
       <button class="nitem" onclick="goPage('history',this)">
         <i class="ti ti-history"></i> History
@@ -325,6 +336,20 @@ select.field-input option{background:var(--black3);color:var(--text);}
           <div class="field-group">
             <label class="field-label">TOPIK CUSTOM (opsional — override dropdown)</label>
             <input type="text" class="field-input" id="custom-topic" placeholder="Contoh: Muslim mayor elected US 2025, islamophobia Europe..." />
+          </div>
+          <div class="field-group">
+            <label class="field-label">TOPIK BEBAS <span style="color:var(--gold);font-weight:700;">★</span> — Ketik apa saja (Palestine, Islam di Korea, dll)</label>
+            <textarea class="field-input" id="free-topic" rows="2" placeholder="Contoh: Serangan Israel di Gaza terbaru... / Muslim di Jepang yang viral... / Kontroversi hijab di Perancis... / Apapun yang lagi trending tentang Islam & Muslim di seluruh dunia"></textarea>
+            <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;" id="topic-chips">
+              <span class="chip" onclick="setFreeTopic('Palestine Gaza ceasefire 2025')">🇵🇸 Palestine</span>
+              <span class="chip" onclick="setFreeTopic('Islam in Japan Korea viral convert')">🇯🇵 Islam Asia</span>
+              <span class="chip" onclick="setFreeTopic('hijab ban controversy Europe 2025')">🧕 Hijab Ban</span>
+              <span class="chip" onclick="setFreeTopic('muslim athlete viral world champion')">🏆 Muslim Athlete</span>
+              <span class="chip" onclick="setFreeTopic('islamophobia hate crime news 2025')">⚠️ Islamofobia</span>
+              <span class="chip" onclick="setFreeTopic('quran recitation viral non muslim reaction')">📖 Quran Viral</span>
+              <span class="chip" onclick="setFreeTopic('muslim politician world leader news')">🏛️ Muslim Politician</span>
+              <span class="chip" onclick="setFreeTopic('islam fastest growing religion converts story')">🌍 Islam Grows</span>
+            </div>
           </div>
           <button class="btn-gold" onclick="runFinder()" id="finder-btn">
             <i class="ti ti-search"></i> Cari Video Viral
@@ -454,6 +479,125 @@ select.field-input option{background:var(--black3);color:var(--text);}
         <div id="img-grid" class="ip-grid"></div>
       </div>
 
+      <!-- PAGE: TIKTOK FINDER -->
+      <div class="page" id="page-tiktok">
+        <div class="full-panel">
+          <div class="sec-head">
+            <div class="sec-title">TikTok Finder</div>
+            <div class="sec-sub">Temukan konten TikTok viral Islam — paste URL lalu generate analisis + VO review untuk YouTube lo</div>
+          </div>
+
+          <!-- STEP 1: FIND -->
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <div style="width:28px;height:28px;border-radius:50%;background:var(--gold);color:var(--black);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;">1</div>
+            <div style="font-size:13px;font-weight:600;color:var(--text);font-family:sans-serif;">Cari Topik TikTok Viral Islam</div>
+          </div>
+          <div class="field-row" style="margin-bottom:10px;">
+            <div class="field-group">
+              <label class="field-label">TOPIK</label>
+              <input type="text" class="field-input" id="tt-topic" placeholder="Contoh: Palestine, convert to Islam, islamophobia..." />
+            </div>
+            <div class="field-group">
+              <label class="field-label">BAHASA KONTEN</label>
+              <select class="field-input" id="tt-lang">
+                <option value="English (international)">English (International)</option>
+                <option value="Indonesian">Indonesia</option>
+                <option value="Arabic with subtitle">Arabic + Subtitle</option>
+                <option value="any language">Semua Bahasa</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-bottom:12px;display:flex;gap:8px;flex-wrap:wrap;">
+            <span class="chip" onclick="setTTTopic('Palestine Gaza ceasefire viral tiktok')">🇵🇸 Palestine</span>
+            <span class="chip" onclick="setTTTopic('convert to islam story tiktok viral')">✨ Convert Story</span>
+            <span class="chip" onclick="setTTTopic('islamophobia reaction tiktok')">⚠️ Islamofobia</span>
+            <span class="chip" onclick="setTTTopic('quran recitation reaction non muslim tiktok')">📖 Quran Reaction</span>
+            <span class="chip" onclick="setTTTopic('hijab story muslim woman tiktok viral')">🧕 Hijab Story</span>
+            <span class="chip" onclick="setTTTopic('muslim athlete viral tiktok')">🏆 Muslim Athlete</span>
+          </div>
+          <button class="btn-dark" onclick="runTTFinder()" id="tt-find-btn" style="margin-bottom:20px;">
+            <i class="ti ti-brand-tiktok"></i> Generate Rekomendasi TikTok
+          </button>
+          <div id="tt-suggestions"></div>
+
+          <div class="divider-line" style="margin:20px 0;"></div>
+
+          <!-- STEP 2: PASTE URL -->
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <div style="width:28px;height:28px;border-radius:50%;background:var(--gold);color:var(--black);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;">2</div>
+            <div style="font-size:13px;font-weight:600;color:var(--text);font-family:sans-serif;">Paste URL TikTok yang Lo Temukan</div>
+          </div>
+          <div style="background:var(--black3);border:1px solid var(--border-gold);border-radius:8px;padding:12px 16px;margin-bottom:14px;font-family:sans-serif;font-size:12px;color:var(--text-muted);line-height:1.8;">
+            <div style="color:var(--gold);font-weight:700;margin-bottom:6px;">💡 Cara dapat link TikTok:</div>
+            <div><b style="color:var(--text);">Di HP:</b> Buka TikTok → tonton video → tap <b style="color:var(--gold);">Share</b> → tap <b style="color:var(--gold);">Copy Link</b></div>
+            <div><b style="color:var(--text);">Di Browser:</b> Klik "Cari via Google" di atas → klik video TikTok → copy URL dari address bar</div>
+            <div style="margin-top:6px;color:var(--text-dim);">⚠️ Tab ini tidak hilang saat lo buka TikTok — tinggal balik ke tab ini dan paste.</div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">URL TIKTOK (satu atau beberapa, pisah baris)</label>
+            <textarea class="field-input" id="tt-urls" rows="3" placeholder="https://www.tiktok.com/@username/video/123456789&#10;https://vm.tiktok.com/XXXXXX/&#10;..."></textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label">DESKRIPSIKAN ISI VIDEO (apa yang lo lihat / dengar)</label>
+            <textarea class="field-input" id="tt-desc" rows="4" placeholder="Contoh: Video seorang wanita Amerika cerita kenapa dia masuk Islam, durasi 45 detik, viral 2M likes. Dia bilang Al-Quran menjawab semua pertanyaan hidupnya..."></textarea>
+          </div>
+          <div class="field-row">
+            <div class="field-group">
+              <label class="field-label">DURASI VIDEO (detik)</label>
+              <input type="number" class="field-input" id="tt-dur" placeholder="45" min="1" />
+            </div>
+            <div class="field-group">
+              <label class="field-label">PLATFORM OUTPUT</label>
+              <select class="field-input" id="tt-output">
+                <option value="YouTube review 9-12 menit">YouTube Review (9–12 menit)</option>
+                <option value="YouTube shorts 60 detik">YouTube Shorts (60 detik)</option>
+                <option value="YouTube kompilasi 15 menit">YouTube Kompilasi (15 menit)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="divider-line" style="margin:20px 0;"></div>
+
+          <!-- STEP 3: GENERATE -->
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <div style="width:28px;height:28px;border-radius:50%;background:var(--gold);color:var(--black);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;">3</div>
+            <div style="font-size:13px;font-weight:600;color:var(--text);font-family:sans-serif;">Generate Analisis + VO Review</div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="btn-gold" onclick="runTTAnalysis()" id="tt-analyze-btn">
+              <i class="ti ti-analyze"></i> Generate Analisis & VO
+            </button>
+            <button class="btn-dark" onclick="runTTHashtag()" id="tt-hashtag-btn">
+              <i class="ti ti-hash"></i> Generate Hashtag & Title YouTube
+            </button>
+          </div>
+        </div>
+
+        <div id="tt-result-section" style="display:none;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+            <div class="panel">
+              <div class="ph"><div class="ph-title"><i class="ti ti-analyze"></i> Analisis Konten</div></div>
+              <div style="padding:16px 18px;">
+                <div id="tt-analysis" class="result-box" style="min-height:80px;margin:0;"></div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="ph"><div class="ph-title"><i class="ti ti-hash"></i> Hashtag & Title</div></div>
+              <div style="padding:16px 18px;">
+                <div id="tt-hashtag" class="result-box" style="min-height:80px;margin:0;"></div>
+              </div>
+            </div>
+          </div>
+          <div class="full-panel" style="padding:0;overflow:hidden;">
+            <div class="ph"><div class="ph-title"><i class="ti ti-microphone"></i> VO Script Review YouTube</div>
+            <button class="copy-vo" onclick="copyResult('tt-vo')" style="font-size:11px;padding:5px 12px;"><i class="ti ti-copy"></i> Copy</button></div>
+            <div style="padding:18px;">
+              <div id="tt-vo" class="result-box" style="margin:0;min-height:120px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- PAGE: HISTORY -->
       <div class="page" id="page-history">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
@@ -507,7 +651,7 @@ function goPage(id, btn){
   const titles = {
     dashboard:'Dashboard', finder:'Video Finder',
     scene:'Scene Picker', vo:'VO Generator',
-    image:'Image Prompt', history:'History'
+    image:'Image Prompt', tiktok:'TikTok Finder', history:'History'
   };
   document.getElementById('page-title').textContent = titles[id] || id;
 }
@@ -554,18 +698,24 @@ async function callClaude(prompt, system){
 }
 
 function parseJSON(raw){
-  try{ return JSON.parse(raw.replace(/```json|```/g,'').trim()); }
-  catch{
-    const m = raw.match(/\[[\s\S]*\]/);
-    if(m) return JSON.parse(m[0]);
-    throw new Error('Gagal parse JSON dari response');
-  }
+  // strip markdown fences
+  let clean = raw.replace(/```json|```/gi,'').trim();
+  // try direct parse
+  try{ return JSON.parse(clean); } catch(e){}
+  // try extracting array
+  const arrMatch = clean.match(/\[[\s\S]*\]/);
+  if(arrMatch){ try{ return JSON.parse(arrMatch[0]); } catch(e){} }
+  // try extracting object array manually
+  const objMatch = clean.match(/\{[\s\S]*\}/g);
+  if(objMatch){ try{ return JSON.parse('['+objMatch.join(',')+']'); } catch(e){} }
+  throw new Error('Gagal parse JSON. Coba lagi.');
 }
 
 // VIDEO FINDER
 async function runFinder(){
   if(!apiKey){ showToast('Set API Key dulu!'); return; }
-  const topic = document.getElementById('custom-topic').value.trim()
+  const topic = document.getElementById('free-topic').value.trim()
+    || document.getElementById('custom-topic').value.trim()
     || document.getElementById('topic-select').value;
   const minDur = document.getElementById('dur-select').value;
   const btn = document.getElementById('finder-btn');
@@ -584,16 +734,16 @@ Syarat:
 Format WAJIB: JSON array SAJA, tanpa teks lain, tanpa markdown backtick:
 [
   {
-    "judul": "judul lengkap video",
-    "channel": "nama channel asli",
+    "judul": "judul lengkap video persis seperti di YouTube",
+    "channel": "nama channel asli persis seperti di YouTube",
     "estimasi_views": "2.4M",
     "durasi": "22 menit",
     "kategori": "Masuk Islam",
-    "alasan_penting": "satu kalimat kenapa video ini penting dibahas dari sudut pandang Islam",
-    "url_contoh": "https://youtube.com/watch?v=contoh"
+    "alasan_penting": "satu kalimat kenapa video ini penting dibahas dari sudut pandang Islam"
   }
 ]
 
+PENTING: judul dan channel harus PERSIS seperti aslinya di YouTube agar bisa dicari. JANGAN buat URL — tidak perlu field url.
 Kategori pilihan: Masuk Islam / Islamofobia / Muslim Politik / Mukjizat Quran / Penembakan/Kekerasan / Lainnya`;
 
   try{
@@ -607,6 +757,8 @@ Kategori pilihan: Masuk Islam / Islamofobia / Muslim Politik / Mukjizat Quran / 
         : cat.includes('Masuk') || cat.includes('Mukjizat') ? 'tv' : 'tg';
       const judul = (v.judul||'').replace(/'/g,"&#39;");
       const dur = (v.durasi||'').replace(/'/g,"&#39;");
+      const searchQ = encodeURIComponent((v.judul||'') + ' ' + (v.channel||''));
+      const channelQ = encodeURIComponent(v.channel||'');
       grid.innerHTML += `<div class="vf-card">
         <div class="vf-num">${String(i+1).padStart(2,'0')}</div>
         <div class="vf-body">
@@ -622,8 +774,11 @@ Kategori pilihan: Masuk Islam / Islamofobia / Muslim Politik / Mukjizat Quran / 
             <button class="vf-btn" onclick="sendToScene('${judul}','${dur}')">&#8594; Scene Picker</button>
             <button class="vf-btn" onclick="sendToVO('${judul}')">&#8594; VO Generator</button>
             <button class="vf-btn" onclick="sendToImg('${judul}')">&#8594; Image Prompt</button>
-            <button class="vf-btn sec" onclick="window.open('${v.url_contoh}','_blank')">
-              <i class="ti ti-external-link"></i> YouTube
+            <button class="vf-btn sec" onclick="window.open('https://www.youtube.com/results?search_query=${searchQ}','_blank')">
+              <i class="ti ti-search"></i> Cari di YouTube
+            </button>
+            <button class="vf-btn sec" onclick="window.open('https://www.youtube.com/results?search_query=${channelQ}','_blank')">
+              <i class="ti ti-user"></i> Cari Channel
             </button>
           </div>
         </div>
@@ -643,6 +798,12 @@ Kategori pilihan: Masuk Islam / Islamofobia / Muslim Politik / Mukjizat Quran / 
   }
   btn.innerHTML = '<i class="ti ti-search"></i> Cari Video Viral';
   btn.disabled = false;
+}
+
+function setFreeTopic(text){
+  document.getElementById('free-topic').value = text;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  event.currentTarget.classList.add('active');
 }
 
 function sendToScene(title, dur){
@@ -887,6 +1048,184 @@ function renderHistory(){
         <span style="font-size:11px;color:var(--text-muted);font-family:sans-serif;">${h.result}</span>
       </div>
     </div>`).join('');
+}
+
+// TIKTOK FINDER
+function setTTTopic(text){
+  document.getElementById('tt-topic').value = text;
+  event.currentTarget.classList.toggle('active');
+}
+
+async function runTTFinder(){
+  if(!apiKey){ showToast('Set API Key dulu!'); return; }
+  const topic = document.getElementById('tt-topic').value.trim();
+  const lang = document.getElementById('tt-lang').value;
+  if(!topic){ showToast('Isi topik TikTok!'); return; }
+  const btn = document.getElementById('tt-find-btn');
+  btn.innerHTML = '<span class="spinner"></span> Generating...';
+  btn.disabled = true;
+  const box = document.getElementById('tt-suggestions');
+  box.innerHTML = '';
+
+  const prompt = `Generate 6 rekomendasi tipe konten TikTok viral Islam tentang: "${topic}" (bahasa: ${lang}).
+
+PENTING: Balas HANYA dengan JSON array di bawah ini. Tidak ada teks lain. Tidak ada penjelasan. Tidak ada markdown. Mulai langsung dengan karakter [ dan akhiri dengan ].
+
+[{"tipe":"...","deskripsi":"...","keyword_cari":"...","hashtag":"#tag1 #tag2 #tag3","kenapa_bagus":"...","potensi_durasi_yt":"9-12 menit"},{"tipe":"...","deskripsi":"...","keyword_cari":"...","hashtag":"#tag1 #tag2","kenapa_bagus":"...","potensi_durasi_yt":"10-15 menit"}]
+
+Isi 6 objek dengan field: tipe, deskripsi, keyword_cari, hashtag, kenapa_bagus, potensi_durasi_yt.`;
+
+  try{
+    const raw = await callClaude(prompt, 'Kamu adalah researcher konten Islam viral di media sosial. Output Bahasa Indonesia.');
+    const arr = parseJSON(raw);
+    box.innerHTML = arr.map((t,i) => `
+      <div class="vf-card" style="margin-bottom:10px;">
+        <div class="vf-num" style="font-size:20px;">${String(i+1).padStart(2,'0')}</div>
+        <div class="vf-body">
+          <div class="vf-title">${t.tipe}</div>
+          <div style="font-size:11px;color:var(--gold);font-family:sans-serif;margin:4px 0;">${t.hashtag}</div>
+          <div class="vf-desc">${t.deskripsi}</div>
+          <div style="font-size:11px;color:var(--text-muted);font-family:sans-serif;margin-top:6px;">
+            <b style="color:var(--text);">Cara cari:</b> ${t.keyword_cari}
+          </div>
+          <div style="font-size:11px;color:var(--text-muted);font-family:sans-serif;margin-top:4px;">
+            <b style="color:var(--text);">Potensi YT:</b> ${t.potensi_durasi_yt} &nbsp;|&nbsp; ${t.kenapa_bagus}
+          </div>
+          <div class="vf-actions" style="margin-top:8px;">
+            <button class="vf-btn sec" onclick="window.open('https://www.google.com/search?q=site:tiktok.com+${encodeURIComponent(t.keyword_cari)}','_blank')">
+              <i class="ti ti-brand-google"></i> Cari via Google
+            </button>
+            <button class="vf-btn sec" onclick="window.open('https://www.tiktok.com/search?q=${encodeURIComponent(t.keyword_cari)}','_blank')">
+              <i class="ti ti-brand-tiktok"></i> Cari di TikTok
+            </button>
+            <button class="vf-btn" onclick="document.getElementById('tt-topic').value='${(t.tipe||'').replace(/'/g,"\\'")}';document.getElementById('tt-desc').value='${(t.deskripsi||'').replace(/'/g,"\\'").replace(/\n/g,' ')}';showToast('Dikirim ke Step 2!');">
+              &#8594; Pakai di Step 2
+            </button>
+          </div>
+        </div>
+      </div>`).join('');
+    document.getElementById('tiktok-badge').textContent = arr.length;
+    addHistory('TikTok Finder', topic, arr.length + ' rekomendasi generated');
+    showToast(arr.length + ' rekomendasi TikTok ready!');
+  } catch(e){
+    box.innerHTML = `<div class="result-box" style="color:var(--red);">Error: ${e.message}</div>`;
+  }
+  btn.innerHTML = '<i class="ti ti-brand-tiktok"></i> Generate Rekomendasi TikTok';
+  btn.disabled = false;
+}
+
+async function runTTAnalysis(){
+  if(!apiKey){ showToast('Set API Key dulu!'); return; }
+  const urls = document.getElementById('tt-urls').value.trim();
+  const desc = document.getElementById('tt-desc').value.trim();
+  const dur = document.getElementById('tt-dur').value || '?';
+  const output = document.getElementById('tt-output').value;
+  if(!desc){ showToast('Isi deskripsi isi video dulu!'); return; }
+
+  const btn = document.getElementById('tt-analyze-btn');
+  btn.innerHTML = '<span class="spinner"></span> Generating...';
+  btn.disabled = true;
+  document.getElementById('tt-result-section').style.display = 'block';
+  document.getElementById('tt-analysis').className = 'result-box loading';
+  document.getElementById('tt-analysis').textContent = 'Analyzing...';
+  document.getElementById('tt-vo').className = 'result-box loading';
+  document.getElementById('tt-vo').textContent = 'Generating VO...';
+
+  const sysPrompt = 'Kamu adalah content strategist dan scriptwriter YouTube Islam profesional untuk channel Zero Ichiro. Prinsip: bedakan Islam (agama yang benar) vs Muslim (manusia yang bisa salah). Kritis, faktual, engaging. Output Bahasa Indonesia.';
+
+  // Analysis
+  const analysisPrompt = `Analisis konten TikTok Islam berikut untuk channel YouTube Zero Ichiro:
+
+${urls ? 'URL: ' + urls : ''}
+DESKRIPSI ISI VIDEO: ${desc}
+DURASI VIDEO: ${dur} detik
+
+Berikan analisis singkat:
+1. INTI PESAN — apa pesan utama konten ini
+2. PERSPEKTIF ISLAM — apakah konten ini merepresentasikan Islam dengan benar? Ada yang perlu dikoreksi?
+3. POTENSI KONTEN — seberapa bagus untuk dijadikan review YouTube?
+4. ANGLE ZERO ICHIRO — dari sudut pandang apa Zero Ichiro bisa membahas ini?
+5. POIN TAMBAHAN — apa yang bisa ditambahkan Zero Ichiro agar konten jadi lebih berbobot?`;
+
+  try{
+    const analysis = await callClaude(analysisPrompt, sysPrompt);
+    document.getElementById('tt-analysis').className = 'result-box';
+    document.getElementById('tt-analysis').textContent = analysis;
+  } catch(e){
+    document.getElementById('tt-analysis').className = 'result-box';
+    document.getElementById('tt-analysis').textContent = 'Error: ' + e.message;
+  }
+
+  // VO Script
+  const voPrompt = `Buat VO script YouTube untuk mereview konten TikTok Islam ini:
+
+DESKRIPSI KONTEN TIKTOK: ${desc}
+DURASI TIKTOK: ${dur} detik
+FORMAT OUTPUT: ${output}
+
+Struktur VO untuk YouTube review:
+[INTRO - hook] Mulai dengan hook yang kuat, sebut konten TikTok yang akan direview
+[PLAY TIKTOK] Tandai bagian ini — penonton nonton klip TikTok-nya
+[REAKSI & ANALISIS] Komentar/analisis Zero Ichiro — gunakan prinsip: Islam vs Muslim, fakta, perspektif Quran/hadits jika relevan
+[POIN TAMBAHAN] Tambahan info/konteks yang tidak ada di TikTok aslinya
+[OUTRO] Ajak penonton berdiskusi di kolom komentar
+
+Target: ${output}
+Bahasa: Indonesia natural, engaging, tidak kaku.`;
+
+  try{
+    const vo = await callClaude(voPrompt, sysPrompt);
+    document.getElementById('tt-vo').className = 'result-box';
+    document.getElementById('tt-vo').textContent = vo;
+    stats.vo++;
+    document.getElementById('s-vo').textContent = stats.vo;
+    addHistory('TikTok VO', desc.substring(0,60)+'...', 'VO review generated');
+    showToast('Analisis & VO ready!');
+  } catch(e){
+    document.getElementById('tt-vo').className = 'result-box';
+    document.getElementById('tt-vo').textContent = 'Error: ' + e.message;
+  }
+  btn.innerHTML = '<i class="ti ti-analyze"></i> Generate Analisis & VO';
+  btn.disabled = false;
+}
+
+async function runTTHashtag(){
+  if(!apiKey){ showToast('Set API Key dulu!'); return; }
+  const desc = document.getElementById('tt-desc').value.trim();
+  const output = document.getElementById('tt-output').value;
+  if(!desc){ showToast('Isi deskripsi video dulu!'); return; }
+
+  const btn = document.getElementById('tt-hashtag-btn');
+  btn.innerHTML = '<span class="spinner"></span> Generating...';
+  btn.disabled = true;
+  document.getElementById('tt-result-section').style.display = 'block';
+  document.getElementById('tt-hashtag').className = 'result-box loading';
+  document.getElementById('tt-hashtag').textContent = 'Generating...';
+
+  const prompt = `Generate untuk video YouTube review konten TikTok Islam:
+
+KONTEN: ${desc}
+FORMAT: ${output}
+
+Berikan:
+1. JUDUL YOUTUBE — 3 pilihan judul yang clickbait tapi jujur (dalam Bahasa Indonesia)
+2. DESKRIPSI — 2-3 kalimat deskripsi YouTube
+3. HASHTAG YOUTUBE — 10 hashtag relevan
+4. TAGS — 15 kata kunci untuk SEO YouTube
+
+Format yang rapi dan siap copy-paste.`;
+
+  try{
+    const text = await callClaude(prompt, 'Kamu adalah YouTube SEO specialist untuk konten Islam Indonesia.');
+    document.getElementById('tt-hashtag').className = 'result-box';
+    document.getElementById('tt-hashtag').textContent = text;
+    showToast('Hashtag & Title ready!');
+  } catch(e){
+    document.getElementById('tt-hashtag').className = 'result-box';
+    document.getElementById('tt-hashtag').textContent = 'Error: ' + e.message;
+  }
+  btn.innerHTML = '<i class="ti ti-hash"></i> Generate Hashtag & Title YouTube';
+  btn.disabled = false;
 }
 
 function clearHistory(){
